@@ -14,3 +14,11 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+Route::get('/currencies/popular', function () {
+    $popularCurrencies = app('getPopularCurrencies')->handle();
+    return view('popular_currencies', ['popularCurrencies' => $popularCurrencies]);
+});
+
+

@@ -91,7 +91,7 @@ class Task1Test extends TestCase
         $command = new GetMostChangedCurrencyCommandHandler($repository);
 
         $currency = $command->handle();
-        
+
         $this->assertEquals(5, $currency->getId());
         $this->assertEquals('Mixin', $currency->getName());
         $this->assertEquals(475.19, $currency->getPrice());
