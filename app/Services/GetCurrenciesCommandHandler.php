@@ -4,15 +4,15 @@ namespace App\Services;
 
 class GetCurrenciesCommandHandler
 {
+    private $currencyRepository;
+
+    public function __construct(CurrencyRepositoryInterface $currencyRepository)
+    {
+        $this->currencyRepository = $currencyRepository;
+    }
+
     public function handle(): array
     {
-        $currencyRepository = app(CurrencyRepositoryInterface::class);
-
-//        $currenciesList = [];
-//        foreach ($currencyRepository->findAll() as $currency) {
-//            array_push($currenciesList, $currency);
-//        }
-//        return $currenciesList;
-        return $currencyRepository->findAll();
+        return $this->currencyRepository->findAll();
     }
 }

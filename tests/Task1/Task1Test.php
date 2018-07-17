@@ -1,5 +1,4 @@
 <?php
-
 namespace Tests\Task1;
 
 use App\Services\Currency;
@@ -20,7 +19,6 @@ class Task1Test extends TestCase
             'url',
             1.5
         );
-
         $this->assertEquals(1, $currency->getId());
         $this->assertEquals('crypto', $currency->getName());
         $this->assertEquals(5000.0, $currency->getPrice());
@@ -31,12 +29,9 @@ class Task1Test extends TestCase
     public function test_currency_repository()
     {
         $repository = $this->app->make(CurrencyRepositoryInterface::class);
-
         $currencies = $repository->findAll();
-
         $this->assertNotEmpty($currencies);
         $this->assertCurrenciesData($currencies);
-
     }
 
     private function assertCurrenciesData(array $currencies): void
@@ -54,11 +49,8 @@ class Task1Test extends TestCase
     public function test_find_all_currency_command()
     {
         $repository = $this->createRepositoryMock();
-
         $command = new GetCurrenciesCommandHandler($repository);
-
         $data = $command->handle();
-
         $this->assertNotEmpty($data);
         $this->assertCurrenciesData($data);
     }
@@ -66,15 +58,10 @@ class Task1Test extends TestCase
     public function test_find_popular_currency_command()
     {
         $repository = $this->createRepositoryMock();
-
         $command = new GetPopularCurrenciesCommandHandler($repository);
-
         $data = $command->handle();
-
         $this->assertCount(3, $data);
-
         $popular = self::getPopularCurrencies();
-
         foreach ($data as $ind => $currency) {
             $this->assertEquals($popular[$ind]->getId(), $currency->getId());
             $this->assertEquals($popular[$ind]->getImageUrl(), $currency->getImageUrl());
@@ -87,16 +74,13 @@ class Task1Test extends TestCase
     public function test_get_most_changed_currency_command()
     {
         $repository = $this->createRepositoryMock();
-
         $command = new GetMostChangedCurrencyCommandHandler($repository);
-
         $currency = $command->handle();
-
-        $this->assertEquals(5, $currency->getId());
-        $this->assertEquals('Mixin', $currency->getName());
-        $this->assertEquals(475.19, $currency->getPrice());
-        $this->assertEquals('url5', $currency->getImageUrl());
-        $this->assertEquals(13.73, $currency->getDailyChangePercent());
+        $this->assertEquals(4, $currency->getId());
+        $this->assertEquals('coin4', $currency->getName());
+        $this->assertEquals(4000.58, $currency->getPrice());
+        $this->assertEquals('url4', $currency->getImageUrl());
+        $this->assertEquals(0.55, $currency->getDailyChangePercent());
     }
 
     private function createRepositoryMock(): CurrencyRepositoryInterface
@@ -109,52 +93,31 @@ class Task1Test extends TestCase
         return [
             new Currency(
                 1,
-                'Bitcoin',
-                6383.94,
+                'coin1',
+                1000.55,
                 'url1',
-                5.95
+                0.25
             ),
             new Currency(
                 2,
-                'Ethereum',
-                436.59,
+                'coin2',
+                2000.56,
                 'url2',
-                10.11
+                0.35
             ),
             new Currency(
                 3,
-                'Litecoin',
-                75.60,
+                'coin3',
+                3000.57,
                 'url3',
-                8.22
+                0.45
             ),
             new Currency(
                 4,
-                'Dash',
-                220.85,
+                'coin4',
+                4000.58,
                 'url4',
-                7.29
-            ),
-            new Currency(
-                5,
-                'Mixin',
-                475.19,
-                'url5',
-                13.73
-            ),
-            new Currency(
-                6,
-                'Paypex',
-                1.35,
-                'url6',
-                7.33
-            ),
-            new Currency(
-                7,
-                'Enigma',
-                1.21,
-                'url7',
-                12.64
+                0.55
             ),
         ];
     }
@@ -163,25 +126,25 @@ class Task1Test extends TestCase
     {
         return [
             new Currency(
-                1,
-                'Bitcoin',
-                6383.94,
-                'url1',
-                5.95
+                4,
+                'coin4',
+                4000.58,
+                'url4',
+                0.55
             ),
             new Currency(
-                5,
-                'Mixin',
-                475.19,
-                'url5',
-                13.73
+                3,
+                'coin3',
+                3000.57,
+                'url3',
+                0.45
             ),
             new Currency(
                 2,
-                'Ethereum',
-                436.59,
+                'coin2',
+                2000.56,
                 'url2',
-                10.11
+                0.35
             ),
         ];
     }

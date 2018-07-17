@@ -16,9 +16,6 @@ Route::get('/', function () {
 });
 
 
-Route::get('/currencies/popular', function () {
-    $popularCurrencies = app('getPopularCurrencies')->handle();
-    return view('popular_currencies', ['popularCurrencies' => $popularCurrencies]);
-});
+Route::get('/currencies/popular', 'CurrenciesController@showPopularCurrencies');
 
 

@@ -17,15 +17,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::middleware('api')->get('/currencies', function () {
-    $responseData = [];
-    foreach (app('getCurrencies')->handle() as $item) {
-        array_push($responseData, \App\Services\CurrencyPresenter::present($item));
-    }
-    return response()->json($responseData);
-});
+Route::middleware('api')->get('/currencies', 'CurrenciesController@showCurrencies');
 
-Route::middleware('api')->get('/currencies/unstable', function () {
-    $mostChangedCurrency = app('getMostChangedCurrency')->handle();
-    return response()->json(\App\Services\CurrencyPresenter::present($mostChangedCurrency));
-});
+Route::middleware('api')->get('/currencies/unstable', 'CurrenciesController@showUnstableCurrency');
